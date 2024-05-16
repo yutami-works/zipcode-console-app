@@ -12,8 +12,9 @@ const getAddress = async (url) => {
     return;
   }
 
-  // 空チェック
   const results = data.results;
+
+  // 空チェック
   if (!results) {
     console.log('該当する住所がありませんでした。');
     return;
@@ -23,17 +24,27 @@ const getAddress = async (url) => {
   results.forEach(result => {
     console.log(result.address1 + result.address2 + result.address3);
   });
-}
 
-/* メイン処理 */
-
-// 引数取得
-const argNum = process.argv[2];
-if (!argNum) {
-  console.error('引数がありません');
   return;
 }
 
-const baseUrl = 'https://zipcloud.ibsnet.co.jp/api/search';
-const targetUrl = `${baseUrl}?zipcode=${argNum}`;
-getAddress(targetUrl);
+// メイン処理
+const main = () => {
+  // 変数定義
+  const argNum = process.argv[2];
+  const baseUrl = 'https://zipcloud.ibsnet.co.jp/api/search';
+
+  // 引数チェック
+  if (!argNum) {
+    console.error('引数がありません');
+    return;
+  }
+
+  // エンドポイント成形
+  const targetUrl = `${baseUrl}?zipcode=${argNum}`;
+
+  getAddress(targetUrl);
+}
+
+// 実行
+main();
